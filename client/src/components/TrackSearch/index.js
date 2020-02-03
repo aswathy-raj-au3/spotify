@@ -3,7 +3,8 @@ import PropTypes from "prop-types";
 import "./TrackSearch.css";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-//import { searchSongs } from "../../actions/songActions";
+import { searchSongs } from "../../redux/actions/songActions";
+import SongsList from '../Songs/index'
 
 class TrackSearch extends Component {
   state = {
@@ -17,11 +18,12 @@ class TrackSearch extends Component {
   };
 
   render() {
+    var accessToken = 'BQDWE-W4kdUVnnC4F1AA2HGvushmHQGTbJoCGEMHEKRT88C5fKdBcdt4fMXFx4o0k_e5G7p1ykAXzgQnJ8WpXuP_PfTTb9l17bIQj6nPjCatqB1KOISU_tN0NUYtQ5H5x1nzwgz7ba4JPi8J_eKkZpX2sSZ672QZCY-g25vL7asSF5ETOw'
     return (
       <div className="track-search-container">
         <form
           onSubmit={() => {
-            // this.props.searchSongs(this.state.searchTerm, this.props.token);
+            this.props.searchSongs(this.state.searchTerm, accessToken);
           }}
         >
           <input
@@ -32,12 +34,14 @@ class TrackSearch extends Component {
           <button
             onClick={e => {
               e.preventDefault();
-              // this.props.searchSongs(this.state.searchTerm, this.props.token);
+              this.props.searchSongs(this.state.searchTerm, accessToken);
             }}
           >
             <i className="fa fa-search search" aria-hidden="true" />
           </button>
         </form>
+
+        <SongsList/>
       </div>
     );
   }
@@ -48,19 +52,19 @@ TrackSearch.propTypes = {
   token: PropTypes.string
 };
 
-const mapStateToProps = state => {
-  return {
-    token: state.tokenReducer.token
-  };
-};
+// const mapStateToProps = state => {
+//   return {
+//     token: state.tokenReducer.token
+//   };
+// };
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      //searchSongs
+      searchSongs
     },
     dispatch
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(TrackSearch);
+export default connect(null, mapDispatchToProps)(TrackSearch);
