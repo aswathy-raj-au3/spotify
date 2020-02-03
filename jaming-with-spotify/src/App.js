@@ -6,6 +6,7 @@ import { fetchUser } from "./redux/actions/userActions";
 import { setToken } from "./redux/actions/tokenActions";
 import Header from "./components/Header";
 import SideMenu from "./components/SideMenu";
+import MainView from "./components/MainView";
 import "./App.css";
 
 class App extends Component {
@@ -79,7 +80,13 @@ class App extends Component {
           </div>
           <div className="main-section">
             <Header />
-            This is App Component
+            <div className="main-section-container">
+              <MainView
+              //pauseSong={this.pauseSong}
+              //resumeSong={this.resumeSong}
+              //audioControl={this.audioControl}
+              />
+            </div>
           </div>
         </div>
       </div>

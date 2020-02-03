@@ -3,15 +3,15 @@ import PropTypes from "prop-types";
 import "./SideMenu.css";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-// import {
-//   fetchSongs,
-//   fetchRecentlyPlayed,
-//   updateViewType
-// } from "../../actions/songActions";
+import {
+  //fetchSongs,
+  //fetchRecentlyPlayed,
+  updateViewType
+} from "../../redux/actions/songActions";
 // import { fetchAlbums } from "../../actions/albumActions";
-// import { fetchArtists } from "../../actions/artistActions";
+import { fetchArtists } from "../../redux/actions/artistActions";
 // import { fetchFeatured } from "../../actions/browseActions";
-// import { updateHeaderTitle } from "../../actions/uiActions";
+import { updateHeaderTitle } from "../../redux/actions/uiActions";
 
 const SideMenu = ({
   updateHeaderTitle,
@@ -88,6 +88,13 @@ const SideMenu = ({
         Browse
       </li>
       <li className="side-menu-item radio">Radio</li>
+      <h3
+        className="side-menu-item user-library-header profile"
+        onClick={() => handleClick("Get Profile")}
+      >
+        YOUR PROFILE
+      </h3>
+      <br />
       <h3 className="user-library-header">Your Library</h3>
       {renderSideMenu()}
     </ul>
@@ -110,9 +117,9 @@ SideMenu.propTypes = {
 const mapStateToProps = state => {
   return {
     userId: state.userReducer.user ? state.userReducer.user.id : "",
-    token: state.tokenReducer.token ? state.tokenReducer.token : ""
-    //artistIds: state.artistsReducer.artistIds,
-    //title: state.uiReducer.title
+    token: state.tokenReducer.token ? state.tokenReducer.token : "",
+    artistIds: state.artistsReducer.artistIds,
+    title: state.uiReducer.title
   };
 };
 
@@ -122,10 +129,10 @@ const mapDispatchToProps = dispatch => {
       //   fetchRecentlyPlayed,
       //   fetchSongs,
       //   fetchAlbums,
-      //   fetchArtists,
+      fetchArtists,
       //   fetchFeatured,
-      //   updateViewType,
-      //   updateHeaderTitle
+      updateViewType,
+      updateHeaderTitle
     },
     dispatch
   );
