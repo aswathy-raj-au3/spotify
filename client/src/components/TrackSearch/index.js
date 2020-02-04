@@ -4,7 +4,7 @@ import "./TrackSearch.css";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { searchSongs } from "../../redux/actions/songActions";
-// import SongsList from '../Songs/index'
+import SongList from '../SongList'
 
 class TrackSearch extends Component {
   constructor(props){
@@ -21,8 +21,8 @@ class TrackSearch extends Component {
   };
  
   render() {
-    // console.log(window.location.pathname.split('=')[1].split('&')[0])
-    var accessToken = window.location.pathname.split('=')[1].split('&')[0]
+    console.log(this.props.token)
+    var accessToken = this.props.token
     return (
       <div className="track-search-container">
         <form
@@ -45,7 +45,7 @@ class TrackSearch extends Component {
           </button>
         </form>
 
-        {/* <SongsList/> */}
+        <SongList/>
       </div>
     );
   }
@@ -56,11 +56,11 @@ TrackSearch.propTypes = {
   token: PropTypes.string
 };
 
-// const mapStateToProps = state => {
-//   return {
-//     token: state.tokenReducer.token
-//   };
-// };
+const mapStateToProps = state => {
+  return {
+    token: state.tokenReducer.token
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
@@ -71,4 +71,4 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(null, mapDispatchToProps)(TrackSearch);
+export default connect(mapStateToProps, mapDispatchToProps)(TrackSearch);

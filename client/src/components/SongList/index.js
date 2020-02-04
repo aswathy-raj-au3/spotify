@@ -14,10 +14,11 @@ class SongList extends Component {
   }
 
   renderSongs() {
-    return this.props.songs.map((song, i) => {
+    return this.props.songs? this.props.songs.map((song, i) => {
+      console.log(this.props.songs)
       return (
         <li className="user-song-item" key={i}>
-          {this.props.viewType == "search" && (
+          {this.props.viewType === "search" && (
             <p className="add-song">
               <i className="fa fa-plus" aria-hidden="true" />
             </p>
@@ -45,7 +46,7 @@ class SongList extends Component {
           </div>
         </li>
       );
-    });
+    }) : null;
   }
 
   render() {
