@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 import ArtistList from "../ArtistList";
 import SingleArtistTracks from "../SingleArtistTracks";
 import Profile from "../Profile";
-//import BrowseView from "../BrowseView";
+import BrowseView from "../BrowseView";
 import "./MainView.css";
 
 const MainView = ({ headerTitle, audioControl, resumeSong, pauseSong }) => {
@@ -18,6 +18,8 @@ const MainView = ({ headerTitle, audioControl, resumeSong, pauseSong }) => {
         <SingleArtistTracks />
       ) : headerTitle === "Get Profile" ? (
         <Profile />
+      ) : headerTitle === "Browse" ? (
+        <BrowseView />
       ) : (
         "Nothing to display"
       )

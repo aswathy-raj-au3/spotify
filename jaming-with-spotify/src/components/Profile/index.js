@@ -2,9 +2,6 @@ import React from "react";
 import PropTypes from "prop-types";
 import "./Profile.css";
 import { connect } from "react-redux";
-import { bindActionCreators } from "redux";
-//import { fetchArtistSongs } from "../../redux/actions/artistActions";
-import { updateHeaderTitle } from "../../redux/actions/uiActions";
 import default_avatar from "../UserDetails/default_avatar.png";
 
 const Profile = ({ userImage, displayName, userID, email, DOB, country }) => {
@@ -34,6 +31,14 @@ const Profile = ({ userImage, displayName, userID, email, DOB, country }) => {
   );
 };
 
+Profile.propTypes = {
+  userImage: PropTypes.string,
+  displayName: PropTypes.string,
+  userID: PropTypes.string,
+  email: PropTypes.string,
+  country: PropTypes.string
+};
+
 const mapStateToProps = state => {
   return {
     displayName: state.userReducer.user
@@ -53,13 +58,4 @@ Profile.propTypes = {
   updateHeaderTitle: PropTypes.func
 };
 
-const mapDispatchToProps = dispatch => {
-  return bindActionCreators(
-    {
-      updateHeaderTitle
-    },
-    dispatch
-  );
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default connect(mapStateToProps)(Profile);

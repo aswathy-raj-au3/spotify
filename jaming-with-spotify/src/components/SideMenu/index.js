@@ -10,7 +10,7 @@ import {
 } from "../../redux/actions/songActions";
 // import { fetchAlbums } from "../../actions/albumActions";
 import { fetchArtists } from "../../redux/actions/artistActions";
-// import { fetchFeatured } from "../../actions/browseActions";
+import { fetchFeatured } from "../../redux/actions/browseActions";
 import { updateHeaderTitle } from "../../redux/actions/uiActions";
 
 const SideMenu = ({
@@ -130,7 +130,7 @@ const mapDispatchToProps = dispatch => {
       //   fetchSongs,
       //   fetchAlbums,
       fetchArtists,
-      //   fetchFeatured,
+      fetchFeatured,
       updateViewType,
       updateHeaderTitle
     },
