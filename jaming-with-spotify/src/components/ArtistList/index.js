@@ -16,7 +16,8 @@ const ArtistList = ({
     return artists.map((artist, i) => {
       const artistSongsAction = (artist, token) => {
         fetchArtistSongs(artist.id, token);
-        updateHeaderTitle("Get one Artist Songs");
+        updateHeaderTitle(artist.name);
+        //updateHeaderTitle("Get one Artist Songs");
       };
 
       return (
@@ -61,7 +62,7 @@ const mapStateToProps = state => {
   return {
     token: state.tokenReducer.token ? state.tokenReducer.token : "",
     artists: state.artistsReducer.artistList
-      ? state.artistsReducer.artistList.artists
+      ? state.artistsReducer.artistList.items
       : ""
   };
 };

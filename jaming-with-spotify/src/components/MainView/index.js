@@ -9,17 +9,23 @@ import Profile from "../Profile";
 import BrowseView from "../BrowseView";
 import "./MainView.css";
 
-const MainView = ({ headerTitle, audioControl, resumeSong, pauseSong }) => {
+const MainView = ({
+  headerTitle,
+  viewType,
+  audioControl,
+  resumeSong,
+  pauseSong
+}) => {
   return (
     <React.Fragment>
       {headerTitle === "Artists" ? (
         <ArtistList />
-      ) : headerTitle === "Get one Artist Songs" ? (
-        <SingleArtistTracks />
       ) : headerTitle === "Get Profile" ? (
         <Profile />
       ) : headerTitle === "Browse" ? (
         <BrowseView />
+      ) : viewType === "Artist" ? (
+        <SingleArtistTracks />
       ) : (
         "Nothing to display"
       )
@@ -44,7 +50,8 @@ const MainView = ({ headerTitle, audioControl, resumeSong, pauseSong }) => {
 };
 
 MainView.propTypes = {
-  headerTitle: PropTypes.string
+  headerTitle: PropTypes.string,
+  viewType: PropTypes.string
   //   audioControl: PropTypes.func,
   //   resumeSong: PropTypes.func,
   //   pauseSong: PropTypes.func
@@ -52,7 +59,8 @@ MainView.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    headerTitle: state.uiReducer.title
+    headerTitle: state.uiReducer.title,
+    viewType: state.songsReducer.viewType
   };
 };
 

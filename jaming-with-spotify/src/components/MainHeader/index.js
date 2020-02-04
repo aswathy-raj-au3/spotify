@@ -35,11 +35,12 @@ const MainHeader = ({
   //     })[0];
   //   }
 
-  //   if (viewType === "Artist" && artists.length > 0) {
-  //     currentArtist = artists.filter(artist => {
-  //       return artist.name === headerTitle;
-  //     })[0];
-  //   }
+  if (viewType === "Artist" && artists.length > 0) {
+    currentArtist = artists.filter(artist => {
+      return artist.name === headerTitle;
+    })[0];
+    console.log(currentArtist);
+  }
 
   return (
     <div className="section-title">
@@ -71,7 +72,7 @@ const MainHeader = ({
             </button>
           </div>
         </div>
-      )}
+      )} */}
 
       {viewType === "Artist" && currentArtist && (
         <div>
@@ -86,10 +87,10 @@ const MainHeader = ({
             </div>
           </div>
           <button
-            onClick={!songPaused ? pauseSong : resumeSong}
+            //onClick={!songPaused ? pauseSong : resumeSong}
             className="main-pause-play-btn artist-button"
           >
-            {songPaused ? "PLAY" : "PAUSE"}
+            {/* {songPaused ? "PLAY" : "PAUSE"} */}
           </button>
         </div>
       )}
@@ -100,16 +101,16 @@ const MainHeader = ({
         headerTitle === "Artists") && (
         <div>
           <h3 className="header-title">{headerTitle}</h3>
-          {headerTitle !== "Artists" && (
+          {/* {headerTitle !== "Artists" && (
             <button
               onClick={!songPaused ? pauseSong : resumeSong}
               className="main-pause-play-btn"
             >
               {songPaused ? "PLAY" : "PAUSE"}
             </button>
-          )}
+          )} */}
         </div>
-      )} */}
+      )}
 
       {headerTitle === "Browse" && (
         <div>
@@ -171,12 +172,12 @@ MainHeader.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    songPaused: state.songsReducer.songPaused,
+    //songPaused: state.songsReducer.songPaused,
     headerTitle: state.uiReducer.title,
     viewType: state.songsReducer.viewType,
     //playlists: state.playlistReducer.playlists,
     artists: state.artistsReducer.artistList
-      ? state.artistsReducer.artistList.artists
+      ? state.artistsReducer.artistList.items
       : [],
     token: state.tokenReducer.token
   };

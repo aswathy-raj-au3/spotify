@@ -1,7 +1,12 @@
 .profile-details-container {
   background: rgb(24, 24, 24);
   padding-bottom: 6px;
-  margin-top: 20px;
+  /* margin-top: 20px; */
+}
+
+.header-title {
+  font-size: 48px;
+  padding: 3px 0 5px 0;
 }
 
 .profile-image {

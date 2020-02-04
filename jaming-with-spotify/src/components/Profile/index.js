@@ -7,7 +7,7 @@ import default_avatar from "../UserDetails/default_avatar.png";
 const Profile = ({ userImage, displayName, userID, email, DOB, country }) => {
   return (
     <div className="profile-details-container">
-      <h2>Account Overview</h2>
+      <h2 className="header-title">Account Overview</h2>
       <img alt="user" className="profile-image" src={userImage} />
       <h3>Profile</h3>
       <hr />
