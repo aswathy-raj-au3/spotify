@@ -66,3 +66,52 @@ export const fetchSongs = accessToken => {
       });
   };
 };
+
+export const fetchRecentlyPlayedPending = () => {
+  return {
+    type: "FETCH_RECENTLY_PLAYED_PENDING"
+  };
+};
+
+export const fetchRecentlyPlayedSuccess = songs => {
+  return {
+    type: "FETCH_RECENTLY_PLAYED_SUCCESS",
+    songs
+  };
+};
+
+export const fetchRecentlyPlayedError = () => {
+  return {
+    type: "FETCH_RECENTLY_PLAYED_ERROR"
+  };
+};
+
+export const fetchRecentlyPlayed = accessToken => {
+  return dispatch => {
+    const request = new Request(
+      `https://api.spotify.com/v1/me/player/recently-played`,
+      {
+        headers: new Headers({
+          Authorization: "Bearer " + accessToken
+        })
+      }
+    );
+
+    dispatch(fetchRecentlyPlayedPending());
+
+    fetch(request)
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        //remove duplicates from recently played
+        res.items = uniqBy(res.items, item => {
+          return item.track.id;
+        });
+        dispatch(fetchRecentlyPlayedSuccess(res.items));
+      })
+      .catch(err => {
+        dispatch(fetchRecentlyPlayedError(err));
+      });
+  };
+};

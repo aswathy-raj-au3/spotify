@@ -5,7 +5,7 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   //fetchSongs,
-  //fetchRecentlyPlayed,
+  fetchRecentlyPlayed,
   updateViewType
 } from "../../redux/actions/songActions";
 // import { fetchAlbums } from "../../actions/albumActions";
@@ -126,7 +126,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      //   fetchRecentlyPlayed,
+      fetchRecentlyPlayed,
       //   fetchSongs,
       //   fetchAlbums,
       fetchArtists,

@@ -34,35 +34,38 @@ class SongList extends Component {
 
       return (
         <li
-          className={
-            song.track.id === this.props.songId
-              ? "active user-song-item"
-              : "user-song-item"
-          }
+          className="user-song-item"
+          //{
+
+          // song.track.id === this.props.songId
+          //   ? "active user-song-item"
+          //   : "user-song-item"
+
+          //}
           key={i}
         >
           <div
             onClick={() => {
-              song.track.id === this.props.songId &&
-              this.props.songPlaying &&
-              this.props.songPaused
-                ? this.props.resumeSong()
-                : this.props.songPlaying &&
-                  !this.props.songPaused &&
-                  song.track.id === this.props.songId
-                ? this.props.pauseSong()
-                : this.props.audioControl(song);
+              // song.track.id === this.props.songId &&
+              // this.props.songPlaying &&
+              // this.props.songPaused
+              //   ? this.props.resumeSong()
+              //   : this.props.songPlaying &&
+              //     !this.props.songPaused &&
+              //     song.track.id === this.props.songId
+              //   ? this.props.pauseSong()
+              //   : this.props.audioControl(song);
             }}
             className="play-song"
           >
-            <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" />
+            {/* <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" /> */}
           </div>
 
           {this.props.viewType !== "songs" && (
             <p
               className="add-song"
               onClick={() => {
-                this.props.addSongToLibrary(this.props.token, song.track.id);
+                //this.props.addSongToLibrary(this.props.token, song.track.id);
               }}
             >
               {this.props.songAddedId === song.track.id ? (
@@ -158,11 +161,11 @@ const mapStateToProps = state => {
     songs: state.songsReducer.songs ? state.songsReducer.songs : "",
     fetchSongsError: state.songsReducer.fetchSongsError,
     fetchSongsPending: state.songsReducer.fetchSongsPending,
-    fetchPlaylistSongsPending: state.songsReducer.fetchPlaylistSongsPending,
-    songPlaying: state.songsReducer.songPlaying,
-    songPaused: state.songsReducer.songPaused,
-    songId: state.songsReducer.songId,
-    songAddedId: state.userReducer.songId || "",
+    //fetchPlaylistSongsPending: state.songsReducer.fetchPlaylistSongsPending,
+    //songPlaying: state.songsReducer.songPlaying,
+    //songPaused: state.songsReducer.songPaused,
+    //songId: state.songsReducer.songId,
+    //songAddedId: state.userReducer.songId || "",
     viewType: state.songsReducer.viewType
   };
 };
@@ -170,8 +173,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      fetchSongs,
-      addSongToLibrary
+      fetchSongs
+      //addSongToLibrary
     },
     dispatch
   );

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-//import SongList from "../SongList";
+import SongList from "../SongList";
 //import AlbumList from "../AlbumList";
 import ArtistList from "../ArtistList";
 import SingleArtistTracks from "../SingleArtistTracks";
@@ -27,7 +27,7 @@ const MainView = ({
       ) : viewType === "Artist" ? (
         <SingleArtistTracks />
       ) : (
-        "Nothing to display"
+        <SongList />
       )
       //<SongList/>
       }
