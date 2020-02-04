@@ -40,7 +40,7 @@ app.use(express.static(__dirname + '/public'))
    .use(cors())
    .use(cookieParser());
 
-app.get('/', function(req, res) {
+app.get('/login', function(req, res) {
 
   var state = generateRandomString(16);
   res.cookie(stateKey, state);
@@ -92,6 +92,14 @@ app.get('/callback', function(req, res) {
         var access_token = body.access_token,
             refresh_token = body.refresh_token;
 
+            if (typeof localStorage === "undefined" || localStorage === null) {
+              var LocalStorage = require('node-localstorage').LocalStorage;
+              localStorage = new LocalStorage('./scratch');
+            }
+          
+            localStorage.setItem('token', access_token)
+            console.log(localStorage.getItem('token'))
+            
         var options = {
           url: 'https://api.spotify.com/v1/me',
           headers: { 'Authorization': 'Bearer ' + access_token },
@@ -109,7 +117,7 @@ app.get('/callback', function(req, res) {
         });
 
         // we can also pass the token to the browser to make requests from there
-        res.redirect('http://localhost:3000/#' +
+        res.redirect('http://localhost:3000/?' +
           querystring.stringify({
             access_token: access_token,
             refresh_token: refresh_token

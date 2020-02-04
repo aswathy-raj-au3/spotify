@@ -4,21 +4,25 @@ import "./TrackSearch.css";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { searchSongs } from "../../redux/actions/songActions";
-import SongsList from '../Songs/index'
+// import SongsList from '../Songs/index'
 
 class TrackSearch extends Component {
-  state = {
-    searchTerm: ""
-  };
-
+  constructor(props){
+    super(props)
+    this.state = {
+      searchTerm: ""
+    };
+  }
+  
   updateSearchTerm = e => {
     this.setState({
       searchTerm: e.target.value
     });
   };
-
+ 
   render() {
-    var accessToken = 'BQDWE-W4kdUVnnC4F1AA2HGvushmHQGTbJoCGEMHEKRT88C5fKdBcdt4fMXFx4o0k_e5G7p1ykAXzgQnJ8WpXuP_PfTTb9l17bIQj6nPjCatqB1KOISU_tN0NUYtQ5H5x1nzwgz7ba4JPi8J_eKkZpX2sSZ672QZCY-g25vL7asSF5ETOw'
+    // console.log(window.location.pathname.split('=')[1].split('&')[0])
+    var accessToken = window.location.pathname.split('=')[1].split('&')[0]
     return (
       <div className="track-search-container">
         <form
@@ -41,7 +45,7 @@ class TrackSearch extends Component {
           </button>
         </form>
 
-        <SongsList/>
+        {/* <SongsList/> */}
       </div>
     );
   }
