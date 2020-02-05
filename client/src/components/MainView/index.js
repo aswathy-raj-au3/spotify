@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import SongList from "../SongList";
-//import AlbumList from "../AlbumList";
+import Albums from "../Albums";
 import ArtistList from "../ArtistList";
 import SingleArtistTracks from "../SingleArtistTracks";
 import Profile from "../Profile";
@@ -16,23 +16,21 @@ const MainView = ({ headerTitle,viewType, audioControl, resumeSong, pauseSong })
         <ArtistList />
       )  : headerTitle === "Get Profile" ? (
         <Profile />
-      ) : (
-        headerTitle === 'Songs' ?(
+      ) :
+      headerTitle === 'Recently Played'? (
         <SongList/>
-      ):
-        headerTitle === 'Recently Played'? (
-          <SongList/>
-        ) :headerTitle === 'Top Tracks' ? (
+      ) :headerTitle === 'Top Tracks' ? (
         <SongList/>
-        
       ) : headerTitle === "Browse" ? (
         <BrowseView />
       ) : viewType === "Artist" ? (
         <SingleArtistTracks />
-      ) : (
+      ) : viewType === "Albums" ? (
+        <Albums/>  
+      ):(
         <SongList />
       )
-      )
+      
       
       }
       {/* {headerTitle === "Albums" ? (

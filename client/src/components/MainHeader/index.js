@@ -98,7 +98,8 @@ const MainHeader = ({
       {(headerTitle === "Songs" ||
         headerTitle === "Recently Played" ||
         headerTitle === "Albums" ||
-        headerTitle === "Artists") && (
+        headerTitle === "Artists" ||
+        headerTitle === "Top Tracks") && (
         <div>
           <h3 className="header-title">{headerTitle}</h3>
           {/* {headerTitle !== "Artists" && (

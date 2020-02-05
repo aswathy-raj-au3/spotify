@@ -21,7 +21,6 @@ class TrackSearch extends Component {
   };
  
   render() {
-    console.log(this.props.token)
     var accessToken = this.props.token
     return (
       <div className="track-search-container">

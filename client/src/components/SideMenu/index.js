@@ -9,7 +9,7 @@ import {
   fetchTopTracks,
   updateViewType
 } from "../../redux/actions/songActions";
-// import { fetchAlbums } from "../../actions/albumActions";
+import { fetchAlbums } from "../../redux/actions/albumActions";
 import { fetchArtists } from "../../redux/actions/artistActions";
 import { fetchFeatured } from "../../redux/actions/browseActions";
 import { updateHeaderTitle } from "../../redux/actions/uiActions";
@@ -43,12 +43,10 @@ const SideMenu = ({
       {
         name: "Top Tracks",
         action: fetchTopTracks,
-        getTopTracks: true
       },
       {
         name: "Recently Played",
         action: fetchRecentlyPlayed,
-        getRecentlyPlayed: true
       },
       {
         name: "Songs",
@@ -77,6 +75,8 @@ const SideMenu = ({
               item.action(token, artistIds)
               else
                item.action(token);
+
+               handleClick(item.name)
           }}
         >
           {item.name}
@@ -136,7 +136,7 @@ const mapDispatchToProps = dispatch => {
     {
         fetchRecentlyPlayed,
       //   fetchSongs,
-      //   fetchAlbums,
+      fetchAlbums,
       fetchArtists,
       fetchTopTracks,
       fetchFeatured,
