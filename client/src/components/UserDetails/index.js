@@ -1,8 +1,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import "./UserDetails.css";
-// import { connect } from "react-redux";
-// import default_avatar from "./default_avatar.png";
+import { connect } from "react-redux";
+import default_avatar from "./default_avatar.png";
 
 const UserDetails = ({ userImage, displayName }) => {
   return (
@@ -18,16 +18,16 @@ UserDetails.propTypes = {
   displayName: PropTypes.string
 };
 
-// const mapStateToProps = state => {
-//   return {
-//     displayName: state.userReducer.user
-//       ? state.userReducer.user.display_name
-//       : "",
-//     userImage:
-//       state.userReducer.user && state.userReducer.user.images[0]
-//         ? state.userReducer.user.images[0].url
-//         : default_avatar
-//   };
-// };
+const mapStateToProps = state => {
+  return {
+    displayName: state.userReducer.user
+      ? state.userReducer.user.display_name
+      : "",
+    userImage:
+      state.userReducer.user && state.userReducer.user.images[0]
+        ? state.userReducer.user.images[0].url
+        : default_avatar
+  };
+};
 
-export default (UserDetails);
+export default connect(mapStateToProps)(UserDetails);

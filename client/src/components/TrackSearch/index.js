@@ -4,7 +4,7 @@ import "./TrackSearch.css";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { searchSongs } from "../../redux/actions/songActions";
-import SongList from '../SongList'
+// import SongList from '../SongList'
 
 class TrackSearch extends Component {
   constructor(props){
@@ -45,7 +45,7 @@ class TrackSearch extends Component {
           </button>
         </form>
 
-        <SongList/>
+        {/* <SongList/> */}
       </div>
     );
   }

@@ -17,7 +17,7 @@ class SingleArtistTracks extends Component {
     return this.props.artistSongs.map((song, i) => {
       return (
         <li className="user-song-item" key={i}>
-          {this.props.viewType == "Artist" && (
+          {this.props.viewType === "Artist" && (
             <p className="add-song">
               <i className="fa fa-plus" aria-hidden="true" />
             </p>

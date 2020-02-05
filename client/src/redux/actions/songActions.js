@@ -67,6 +67,57 @@ export const fetchSongs = accessToken => {
   };
 };
 
+//recently played
+export const fetchRecentlyPlayedPending = () => {
+  return {
+    type: "FETCH_RECENTLY_PLAYED_PENDING"
+  };
+};
+
+export const fetchRecentlyPlayedSuccess = songs => {
+  return {
+    type: "FETCH_RECENTLY_PLAYED_SUCCESS",
+    songs
+  };
+};
+
+export const fetchRecentlyPlayedError = () => {
+  return {
+    type: "FETCH_RECENTLY_PLAYED_ERROR"
+  };
+};
+
+export const fetchRecentlyPlayed = accessToken => {
+  return dispatch => {
+    const request = new Request(
+      `https://api.spotify.com/v1/me/player/recently-played`,
+      {
+        headers: new Headers({
+          Authorization: "Bearer " + accessToken
+        })
+      }
+    );
+
+    dispatch(fetchRecentlyPlayedPending());
+
+    fetch(request)
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        //remove duplicates from recently played
+        res.items = uniqBy(res.items, item => {
+          return item.track.id;
+        });
+        dispatch(fetchRecentlyPlayedSuccess(res.items));
+      })
+      .catch(err => {
+        dispatch(fetchRecentlyPlayedError(err));
+      });
+  };
+};
+
+//search tracks
 export const searchSongsSuccess = (songs) => {
   return {
       type: 'SEARCH_SONGS_SUCCESS',
@@ -102,7 +153,6 @@ export const searchSongs = (searchTerm, accessToken) => {
       return res.json()
    })
    .then(res => {
-      console.log(res.tracks.items)
       res.items = res.tracks.items.map(item => {
           
         return {
@@ -116,4 +166,58 @@ export const searchSongs = (searchTerm, accessToken) => {
    });
 }
   
+};
+
+//top tracks
+export const fetchTopTracksPending = () => {
+  return {
+    type: "FETCH_TOPTRACKS_PENDING"
+  };
+};
+
+export const fetchTopTracksSuccess = songs => {
+  return {
+    type: "FETCH_TOPTRACKS_SUCCESS",
+    songs
+  };
+};
+
+export const fetchTopTracksError = () => {
+  return {
+    type: "FETCH_TOPTRACKS_ERROR"
+  };
+};
+
+export const fetchTopTracks = (accessToken) => {
+  return dispatch => {
+    const request = new Request(
+      `https://api.spotify.com/v1/me/top/tracks`,
+      {
+        headers: new Headers({
+          Authorization: "Bearer " + accessToken
+        })
+      }
+    );
+
+    dispatch(fetchTopTracksPending());
+
+    fetch(request)
+      .then(res => {
+        return res.json();
+      })
+      .then(res => {
+        console.log(res.items)
+        res.items = res.items.map(item => {
+          
+          return {
+            track: item
+          };
+        });
+        dispatch(fetchTopTracksSuccess(res.items));
+      })
+      .catch(err => {
+        console.log(err)
+        dispatch(fetchTopTracksError(err));
+      });
+  };
 };

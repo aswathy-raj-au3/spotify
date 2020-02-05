@@ -5,12 +5,13 @@ import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import {
   //fetchSongs,
-  //fetchRecentlyPlayed,
+  fetchRecentlyPlayed,
+  fetchTopTracks,
   updateViewType
 } from "../../redux/actions/songActions";
 // import { fetchAlbums } from "../../actions/albumActions";
 import { fetchArtists } from "../../redux/actions/artistActions";
-// import { fetchFeatured } from "../../actions/browseActions";
+import { fetchFeatured } from "../../redux/actions/browseActions";
 import { updateHeaderTitle } from "../../redux/actions/uiActions";
 
 const SideMenu = ({
@@ -21,9 +22,10 @@ const SideMenu = ({
   fetchSongs,
   fetchAlbums,
   fetchArtists,
+  fetchTopTracks,
   token,
   title,
-  artistIds
+  artistIds, 
 }) => {
   const handleClick = name => {
     updateHeaderTitle(name);
@@ -39,8 +41,14 @@ const SideMenu = ({
   const renderSideMenu = () => {
     const menu = [
       {
+        name: "Top Tracks",
+        action: fetchTopTracks,
+        getTopTracks: true
+      },
+      {
         name: "Recently Played",
-        action: fetchRecentlyPlayed
+        action: fetchRecentlyPlayed,
+        getRecentlyPlayed: true
       },
       {
         name: "Songs",
@@ -65,10 +73,10 @@ const SideMenu = ({
             title === item.name ? "active side-menu-item" : "side-menu-item"
           }
           onClick={() => {
-            item.getArtists
-              ? item.action(token, artistIds)
-              : item.action(token);
-            handleClick(item.name);
+            if(item.getArtists)
+              item.action(token, artistIds)
+              else
+               item.action(token);
           }}
         >
           {item.name}
@@ -87,7 +95,6 @@ const SideMenu = ({
       >
         Browse
       </li>
-      <li className="side-menu-item radio">Radio</li>
       <h3
         className="side-menu-item user-library-header profile"
         onClick={() => handleClick("Get Profile")}
@@ -109,6 +116,7 @@ SideMenu.propTypes = {
   fetchSongs: PropTypes.func,
   fetchAlbums: PropTypes.func,
   fetchArtists: PropTypes.func,
+  fetchTopTracks: PropTypes.func,
   token: PropTypes.string,
   artistIds: PropTypes.string,
   title: PropTypes.string
@@ -116,21 +124,22 @@ SideMenu.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    // userId: state.userReducer.user ? state.userReducer.user.id : "",
-    // token: state.tokenReducer.token ? state.tokenReducer.token : "",
-    // artistIds: state.artistsReducer.artistIds,
-    // title: state.uiReducer.title
+    userId: state.userReducer.user ? state.userReducer.user.id : "",
+    token: state.tokenReducer.token ? state.tokenReducer.token : "",
+    artistIds: state.artistsReducer.artistIds? state.artistsReducer.artistIds: "",
+    title: state.uiReducer.title
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      //   fetchRecentlyPlayed,
+        fetchRecentlyPlayed,
       //   fetchSongs,
       //   fetchAlbums,
       fetchArtists,
-      //   fetchFeatured,
+      fetchTopTracks,
+      fetchFeatured,
       updateViewType,
       updateHeaderTitle
     },

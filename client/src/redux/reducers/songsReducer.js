@@ -1,6 +1,8 @@
 const defaultState = {
   fetchArtistSongsPending: true,
-  //fetchSongsPending: true,
+  fetchSongsPending: true,
+  fetchTopTracksPending: true,
+  searchSongsPending: true,
   songPlaying: false,
   //timeElapsed: 0,
   songId: 0,
@@ -40,7 +42,7 @@ export const songsReducer = (state = defaultState, action) => {
 
     case 'SEARCH_SONGS_SUCCESS':
           return{
-              ...state, viewType:'search', searchSongsError:false, songs: action.songs
+              ...state, viewType:'Search', searchSongsError:false, songs: action.songs
           }
 
     case 'SEARCH_SONGS_ERROR':
@@ -52,35 +54,80 @@ export const songsReducer = (state = defaultState, action) => {
         ...state,
         searchSongsPending: true
       };
-    
-    case "PLAY_SONG":
+
+    case "FETCH_TOPTRACKS_PENDING":
       return {
         ...state,
-        songPlaying: true,
-        songDetails: action.song,
-        songId: action.song.id,
-        songPaused: false
+        fetchTopTracksPending: true
       };
+
+    case "FETCH_TOPTRACKS_SUCCESS":
+      return {
+        ...state,
+        songs: action.songs,
+        viewType: "Top Tracks",
+        fetchTopTracksError: false,
+        fetchTopTracksPending: false
+      };
+
+    case "FETCH_TOPTRACKS_ERROR":
+      return {
+        ...state,
+        fetchTopTracksError: true,
+        fetchTopTracksPending: false
+      };
+
+    case "FETCH_RECENTLY_PLAYED_PENDING":
+      return {
+        ...state,
+        fetchSongsPending: true
+      };
+
+    case "FETCH_RECENTLY_PLAYED_SUCCESS":
+      return {
+        ...state,
+        songs: action.songs,
+        viewType: "Recently Played",
+        fetchSongsError: false,
+        fetchSongsPending: false
+      };
+
+    case "FETCH_RECENTLY_PLAYED_ERROR":
+      return {
+        ...state,
+        fetchSongsError: true,
+        fetchSongsPending: false
+      };
+
+       
+    // case "PLAY_SONG":
+    //   return {
+    //     ...state,
+    //     songPlaying: true,
+    //     songDetails: action.song,
+    //     songId: action.song.id,
+    //     songPaused: false
+    //   };
   
-    case "STOP_SONG":
-      return {
-        ...state,
-        songPlaying: false,
-        songDetails: null,
-        songPaused: true
-      };
+    // case "STOP_SONG":
+    //   return {
+    //     ...state,
+    //     songPlaying: false,
+    //     songDetails: null,
+    //     songPaused: true
+    //   };
   
-    case "PAUSE_SONG":
-      return {
-        ...state,
-        songPaused: true
-      };
+    // case "PAUSE_SONG":
+    //   return {
+    //     ...state,
+    //     songPaused: true
+    //   };
   
-    case "RESUME_SONG":
-      return {
-        ...state,
-        songPaused: false
-      };
+    // case "RESUME_SONG":
+    //   return {
+    //     ...state,
+    //     songPaused: false
+    //   };
 
     default:
       return state;

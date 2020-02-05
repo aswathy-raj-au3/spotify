@@ -1,12 +1,24 @@
 import React, { Component } from "react";
-//import moment from "moment";
+// import moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
-import { searchSongs } from "../../redux/actions/songActions";
+import { searchSongs,fetchRecentlyPlayed,fetchTopTracks } from "../../redux/actions/songActions";
 import "../SongList/SongList.css";
+//import { addSongToLibrary } from "../../redux/actions/userActions";
 
 class SongList extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (
+      nextProps.token !== "" &&
+      !nextProps.fetchSongsError &&
+      nextProps.fetchSongsPending &&
+      nextProps.viewType === "songs"
+    ) {
+      this.props.searchSongs(nextProps.token);
+    }
+  }
+
   msToMinutesAndSeconds(ms) {
     const minutes = Math.floor(ms / 60000);
     const seconds = ((ms % 60000) / 1000).toFixed(0);
@@ -15,14 +27,78 @@ class SongList extends Component {
 
   renderSongs() {
     return this.props.songs? this.props.songs.map((song, i) => {
-      console.log(this.props.songs)
+      // const buttonClass =
+      // song.track.id === this.props.songId && !this.props.songPaused
+      //   ? "fa-pause-circle-o"
+      //   : "fa-play-circle-o";
+
       return (
-        <li className="user-song-item" key={i}>
+        <li className="user-song-item"
+         //{
+
+          // song.track.id === this.props.songId
+          //   ? "active user-song-item"
+          //   : "user-song-item"
+
+          //}
+           key={i}>
+
+          <div
+            onClick={() => {
+              // song.track.id === this.props.songId &&
+              // this.props.songPlaying &&
+              // this.props.songPaused
+              //   ? this.props.resumeSong()
+              //   : this.props.songPlaying &&
+              //     !this.props.songPaused &&
+              //     song.track.id === this.props.songId
+              //   ? this.props.pauseSong()
+              //   : this.props.audioControl(song);
+            }}
+            className="play-song"
+          >
+            {/* <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" /> */}
+          </div>
+
+          {this.props.viewType !== "Songs" && (
+            <p
+              className="add-song"
+              onClick={() => {
+                //this.props.addSongToLibrary(this.props.token, song.track.id);
+              }}
+            >
+              {this.props.songAddedId === song.track.id ? (
+                
+                <i className="fa fa-check add-song" aria-hidden="true" />
+              ) : (
+                <i className="fa fa-plus add-song" aria-hidden="true" />
+              )}
+            </p>
+          )}
+
+          {this.props.viewType === "Songs" && (
+            <p className="add-song">
+              <i className="fa fa-check" aria-hidden="true" />
+            </p>
+          )}
+{/* 
           {this.props.viewType === "search" && (
             <p className="add-song">
               <i className="fa fa-plus" aria-hidden="true" />
             </p>
           )}
+
+          {this.props.viewType === "Top Tracks" && (
+            <p className="add-song">
+              <i className="fa fa-plus" aria-hidden="true" />
+            </p>
+          )}
+
+          {this.props.viewType === "Recently Played" && (
+            <p className="add-song">
+              <i className="fa fa-plus" aria-hidden="true" />
+            </p>
+          )} */}
 
           <div className="song-title">
             <p>{song.track.name}</p>
@@ -72,9 +148,24 @@ class SongList extends Component {
             </p>
           </div>
         </div>
+        {/* {this.props.songs &&
+          !this.props.fetchSongsPending &&
+          !this.props.fetchPlaylistSongsPending &&
+          this.renderSongs()} */}
+
         {this.props.searchSongs &&
           !this.props.searchSongsPending &&
           !this.props.searchSongsError &&
+          this.renderSongs()}
+
+        {this.props.fetchRecentlyPlayed &&
+          !this.props.fetchSongsError &&
+          !this.props.fetchSongsPending &&
+          this.renderSongs()}
+
+        {this.props.fetchTopTracks &&
+          !this.props.fetchTopTracksPending &&
+          !this.props.fetchTopTracksError &&
           this.renderSongs()}
       </div>
     );
@@ -83,19 +174,44 @@ class SongList extends Component {
 
 SongList.propTypes = {
   viewType: PropTypes.string,
-  // token: PropTypes.string,
+  token: PropTypes.string,
+  songId: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  songAddedId: PropTypes.string,
   songs: PropTypes.oneOfType([PropTypes.string, PropTypes.array]),
   searchSongsError: PropTypes.bool,
   searchSongsPending: PropTypes.bool,
-  searchSongs: PropTypes.func
+  searchSongs: PropTypes.func,
+  fetchRecentlyPlayed: PropTypes.func,
+  fetchTopTracksPending: PropTypes.bool,
+  fetchTopTracksError: PropTypes.bool,
+  fetchTopTracks: PropTypes.func,
+  fetchSongsError: PropTypes.bool,
+  fetchSongsPending: PropTypes.bool,
+  // fetchPlaylistSongsPending: PropTypes.bool,
+  // fetchSongs: PropTypes.func,
+  // audioControl: PropTypes.func,
+  // songPaused: PropTypes.bool,
+  // songPlaying: PropTypes.bool,
+  // resumeSong: PropTypes.func,
+  // pauseSong: PropTypes.func,
+  // addSongToLibrary: PropTypes.func
 };
 
 const mapStateToProps = state => {
   return {
-    // token: state.tokenReducer.token ? state.tokenReducer.token : "",
+    token: state.tokenReducer.token ? state.tokenReducer.token : "",
     songs: state.songsReducer.songs ? state.songsReducer.songs : "",
     searchSongsError: state.songsReducer.searchSongsError,
     searchSongsPending: state.songsReducer.searchSongsPending,
+    fetchTopTracksError: state.songsReducer.fetchTopTracksError,
+    fetchTopTracksPending: state.songsReducer.fetchTopTracksPending,
+    fetchSongsError: state.songsReducer.fetchSongsError,
+    fetchSongsPending: state.songsReducer.fetchSongsPending,
+    //fetchPlaylistSongsPending: state.songsReducer.fetchPlaylistSongsPending,
+    //songPlaying: state.songsReducer.songPlaying,
+    //songPaused: state.songsReducer.songPaused,
+    //songId: state.songsReducer.songId,
+    //songAddedId: state.userReducer.songId || "",
     viewType: state.songsReducer.viewType
   };
 };
@@ -103,6 +219,11 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
+      
+      // fetchSongs,
+      fetchRecentlyPlayed,
+      fetchTopTracks,
+      //addSongToLibrary
       searchSongs
     },
     dispatch

@@ -4,28 +4,36 @@ import { connect } from "react-redux";
 import SongList from "../SongList";
 //import AlbumList from "../AlbumList";
 import ArtistList from "../ArtistList";
-import SongList from "../SongList";
 import SingleArtistTracks from "../SingleArtistTracks";
 import Profile from "../Profile";
-//import BrowseView from "../BrowseView";
+import BrowseView from "../BrowseView";
 import "./MainView.css";
 
-const MainView = ({ headerTitle, audioControl, resumeSong, pauseSong }) => {
+const MainView = ({ headerTitle,viewType, audioControl, resumeSong, pauseSong }) => {
   return (
     <React.Fragment>
       {headerTitle === "Artists" ? (
         <ArtistList />
-      ) : headerTitle === "Get one Artist Songs" ? (
-        <SingleArtistTracks />
-      ) : headerTitle === "Get Profile" ? (
+      )  : headerTitle === "Get Profile" ? (
         <Profile />
       ) : (
-        headerTitle === 'Songs' ? (
+        headerTitle === 'Songs' ?(
+        <SongList/>
+      ):
+        headerTitle === 'Recently Played'? (
           <SongList/>
-        ):(
-          ""
-        )
+        ) :headerTitle === 'Top Tracks' ? (
+        <SongList/>
+        
+      ) : headerTitle === "Browse" ? (
+        <BrowseView />
+      ) : viewType === "Artist" ? (
+        <SingleArtistTracks />
+      ) : (
+        <SongList />
       )
+      )
+      
       }
       {/* {headerTitle === "Albums" ? (
         <AlbumList audioControl={audioControl} />
@@ -54,7 +62,8 @@ MainView.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    headerTitle: state.uiReducer.title
+    headerTitle: state.uiReducer.title,
+    viewType: state.songsReducer.viewType
   };
 };
 

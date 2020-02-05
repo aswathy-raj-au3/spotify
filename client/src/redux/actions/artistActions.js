@@ -20,7 +20,8 @@ export const fetchArtistsError = () => {
 export const fetchArtists = (accessToken, artistIds) => {
   return dispatch => {
     const request = new Request(
-      `https://api.spotify.com/v1/artists?ids=${artistIds}`,
+      `https://api.spotify.com/v1/me/following?type=artist`,
+      //`https://api.spotify.com/v1/artists?ids=${artistIds}`,
       {
         headers: new Headers({
           Authorization: "Bearer " + accessToken
@@ -35,7 +36,8 @@ export const fetchArtists = (accessToken, artistIds) => {
         return res.json();
       })
       .then(res => {
-        dispatch(fetchArtistsSuccess(res));
+        console.log("Followed Artists:", res);
+        dispatch(fetchArtistsSuccess(res.artists));
       })
       .catch(err => {
         dispatch(fetchArtistsError(err));
