@@ -1,4 +1,4 @@
-const albumsReducer = (state = {}, action) => {
+export const albumsReducer = (state = {}, action) => {
 switch (action.type) {
     case "FETCH_ALBUMS_PENDING":
     return {
@@ -11,7 +11,8 @@ switch (action.type) {
         ...state,
         albums: action.albums,
         fetchAlbumsError: false,
-        fetchAlbumsPending: false
+        fetchAlbumsPending: false,
+        viewType: "Albums"
     };
 
     case "FETCH_ARTISTS_ERROR":
@@ -26,4 +27,31 @@ switch (action.type) {
 }
 };
 
-export default albumsReducer;
+export const albumTracksReducer = (state = {}, action) => {
+switch (action.type) {
+    case "FETCH_ALBUM_TRACKS_PENDING":
+    return {
+        ...state,
+        fetchAlbumTracksPending: true
+    };
+
+    case "FETCH_ALBUM_TRACKS_SUCCESS":
+    return {
+        ...state,
+        albumTracks: action.albumTracks,
+        fetchAlbumTracksError: false,
+        fetchAlbumTracksPending: false,
+        viewType: "Album"
+    };
+
+    case "FETCH_ALBUM_TRACKS_ERROR":
+    return {
+        ...state,
+        fetchAlbumTracksError: true,
+        fetchAlbumTracksPending: false
+    };
+
+    default:
+    return state;
+}
+};

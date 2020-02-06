@@ -71,7 +71,7 @@
   transform: translate(-50%, -50%);
 }
 
-.current-artist-header-container {
+.current-artist-header-container, .current-album-header-container {
   display: flex;
 }
 
@@ -80,8 +80,12 @@
   height: 180px;
   border-radius: 50%;
 }
+.current-album-image{
+  width: 180px;
+  height: 180px;
+}
 
-.current-artist-info {
+.current-artist-info, .current-album-info{
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -94,7 +98,13 @@
   font-size: 13px;
 }
 
-.artist-button {
+.current-album-info p {
+  text-transform: uppercase;
+  font-family: "Proxima Thin", Georgia, sans-serif;
+  font-size: 13px;
+}
+
+.artist-button, .album-button {
   margin-top: 20px;
   margin-left: 40px;
 }

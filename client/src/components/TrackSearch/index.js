@@ -1,58 +1,52 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./TrackSearch.css";
 import { connect } from "react-redux";
 import { bindActionCreators } from "redux";
 import { searchSongs } from "../../redux/actions/songActions";
-// import SongList from '../SongList'
+import { updateHeaderTitle } from "../../redux/actions/uiActions";
+import {updateViewType} from "../../redux/actions/songActions";
 
-class TrackSearch extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      searchTerm: ""
-    };
-  }
+const TrackSearch = (props) => {
+  const [searchTerm, setSearchTerm] = useState("")
   
-  updateSearchTerm = e => {
-    this.setState({
-      searchTerm: e.target.value
-    });
-  };
- 
-  render() {
-    var accessToken = this.props.token
+  const updateSearchTerm = (e) => {
+    setSearchTerm(e.target.value)
+  }
+
+    var accessToken = props.token
     return (
       <div className="track-search-container">
         <form
           onSubmit={() => {
-            this.props.searchSongs(this.state.searchTerm, accessToken);
+            props.searchSongs(searchTerm, accessToken);
           }}
         >
           <input
-            onChange={this.updateSearchTerm}
+            onChange={updateSearchTerm}
             type="text"
             placeholder="Search..."
           />
           <button
             onClick={e => {
               e.preventDefault();
-              this.props.searchSongs(this.state.searchTerm, accessToken);
+              props.searchSongs(searchTerm, accessToken);
             }}
           >
             <i className="fa fa-search search" aria-hidden="true" />
           </button>
         </form>
 
-        {/* <SongList/> */}
       </div>
     );
-  }
+  
 }
 
 TrackSearch.propTypes = {
   searchSongs: PropTypes.func,
-  token: PropTypes.string
+  token: PropTypes.string,
+  updateHeaderTitle: PropTypes.func,
+  updateViewType: PropTypes.func
 };
 
 const mapStateToProps = state => {
@@ -64,7 +58,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      searchSongs
+      searchSongs,
+      updateViewType,
+      updateHeaderTitle
     },
     dispatch
   );

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 // import moment from "moment";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
@@ -7,26 +7,26 @@ import { searchSongs,fetchRecentlyPlayed,fetchTopTracks } from "../../redux/acti
 import "../SongList/SongList.css";
 //import { addSongToLibrary } from "../../redux/actions/userActions";
 
-class SongList extends Component {
-  componentWillReceiveProps(nextProps) {
-    if (
-      nextProps.token !== "" &&
-      !nextProps.fetchSongsError &&
-      nextProps.fetchSongsPending &&
-      nextProps.viewType === "songs"
-    ) {
-      this.props.searchSongs(nextProps.token);
-    }
-  }
+const SongList = (props) => {
+  // componentWillReceiveProps(nextProps) {
+  //   if (
+  //     nextProps.token !== "" &&
+  //     !nextProps.fetchSongsError &&
+  //     nextProps.fetchSongsPending &&
+  //     nextProps.viewType === "songs"
+  //   ) {
+  //     this.props.searchSongs(nextProps.token);
+  //   }
+  // }
 
-  msToMinutesAndSeconds(ms) {
+ const msToMinutesAndSeconds = (ms) =>{
     const minutes = Math.floor(ms / 60000);
     const seconds = ((ms % 60000) / 1000).toFixed(0);
     return minutes + ":" + (seconds < 10 ? "0" : "") + seconds;
   }
 
-  renderSongs() {
-    return this.props.songs? this.props.songs.map((song, i) => {
+ const renderSongs = () => {
+    return props.songs? props.songs.map((song, i) => {
       // const buttonClass =
       // song.track.id === this.props.songId && !this.props.songPaused
       //   ? "fa-pause-circle-o"
@@ -60,14 +60,14 @@ class SongList extends Component {
             {/* <i className={`fa ${buttonClass} play-btn`} aria-hidden="true" /> */}
           </div>
 
-          {this.props.viewType !== "Songs" && (
+          {props.viewType !== "Songs" && (
             <p
               className="add-song"
               onClick={() => {
                 //this.props.addSongToLibrary(this.props.token, song.track.id);
               }}
             >
-              {this.props.songAddedId === song.track.id ? (
+              {props.songAddedId === song.track.id ? (
                 
                 <i className="fa fa-check add-song" aria-hidden="true" />
               ) : (
@@ -76,7 +76,7 @@ class SongList extends Component {
             </p>
           )}
 
-          {this.props.viewType === "Songs" && (
+          {props.viewType === "Songs" && (
             <p className="add-song">
               <i className="fa fa-check" aria-hidden="true" />
             </p>
@@ -118,15 +118,14 @@ class SongList extends Component {
           </div>
 
           <div className="song-length">
-            <p>{this.msToMinutesAndSeconds(song.track.duration_ms)}</p>
+            <p>{msToMinutesAndSeconds(song.track.duration_ms)}</p>
           </div>
         </li>
       );
     }) : null;
   }
 
-  render() {
-    console.log("View Type:", this.props.viewType);
+    console.log("View Type:", props.viewType);
     return (
       <div>
         <div className="song-header-container">
@@ -153,23 +152,23 @@ class SongList extends Component {
           !this.props.fetchPlaylistSongsPending &&
           this.renderSongs()} */}
 
-        {this.props.searchSongs &&
-          !this.props.searchSongsPending &&
-          !this.props.searchSongsError &&
-          this.renderSongs()}
+        {props.searchSongs &&
+          !props.searchSongsPending &&
+          !props.searchSongsError &&
+          renderSongs()}
 
-        {this.props.fetchRecentlyPlayed &&
-          !this.props.fetchSongsError &&
-          !this.props.fetchSongsPending &&
-          this.renderSongs()}
+        {props.fetchRecentlyPlayed &&
+          !props.fetchSongsError &&
+          !props.fetchSongsPending &&
+          renderSongs()}
 
-        {this.props.fetchTopTracks &&
-          !this.props.fetchTopTracksPending &&
-          !this.props.fetchTopTracksError &&
-          this.renderSongs()}
+        {props.fetchTopTracks &&
+          !props.fetchTopTracksPending &&
+          !props.fetchTopTracksError &&
+          renderSongs()}
       </div>
     );
-  }
+  
 }
 
 SongList.propTypes = {

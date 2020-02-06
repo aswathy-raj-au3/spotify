@@ -5,11 +5,12 @@ import SongList from "../SongList";
 import Albums from "../Albums";
 import ArtistList from "../ArtistList";
 import SingleArtistTracks from "../SingleArtistTracks";
+import SingleAlbumTracks from "../SingleAlbumTracks";
 import Profile from "../Profile";
 import BrowseView from "../BrowseView";
 import "./MainView.css";
 
-const MainView = ({ headerTitle,viewType, audioControl, resumeSong, pauseSong }) => {
+const MainView = ({ headerTitle,viewType,viewTypeAlbum, audioControl, resumeSong, pauseSong }) => {
   return (
     <React.Fragment>
       {headerTitle === "Artists" ? (
@@ -25,10 +26,12 @@ const MainView = ({ headerTitle,viewType, audioControl, resumeSong, pauseSong })
         <BrowseView />
       ) : viewType === "Artist" ? (
         <SingleArtistTracks />
-      ) : viewType === "Albums" ? (
+      ) : headerTitle === "Albums" ? (
         <Albums/>  
-      ):(
-        <SongList />
+      ): viewTypeAlbum === "Album" ? (
+        <SingleAlbumTracks />
+      ): (
+        <SongList/>
       )
       
       
@@ -61,7 +64,8 @@ MainView.propTypes = {
 const mapStateToProps = state => {
   return {
     headerTitle: state.uiReducer.title,
-    viewType: state.songsReducer.viewType
+    viewType: state.songsReducer.viewType,
+    viewTypeAlbum: state.albumTracksReducer.viewType
   };
 };
 

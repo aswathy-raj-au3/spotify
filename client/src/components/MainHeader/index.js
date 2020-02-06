@@ -22,12 +22,15 @@ const MainHeader = ({
   //songPaused,
   headerTitle,
   viewType,
+  viewTypeAlbum,
   //playlists,
   token,
-  artists
+  artists,
+  albums
 }) => {
   // let currentPlaylist;
   let currentArtist;
+  let currentAlbum
 
   //   if (viewType === "playlist") {
   //     currentPlaylist = playlists.filter(playlist => {
@@ -40,6 +43,13 @@ const MainHeader = ({
       return artist.name === headerTitle;
     })[0];
     console.log(currentArtist);
+  }
+
+  if (viewTypeAlbum === "Album") {
+    currentAlbum = albums.filter(item => {
+      return item.album.name === headerTitle;
+    })[0];
+    console.log(currentAlbum);
   }
 
   return (
@@ -89,6 +99,27 @@ const MainHeader = ({
           <button
             //onClick={!songPaused ? pauseSong : resumeSong}
             className="main-pause-play-btn artist-button"
+          >
+            {/* {songPaused ? "PLAY" : "PAUSE"} */}
+          </button>
+        </div>
+      )}
+
+      {viewTypeAlbum === "Album" && currentAlbum && (
+        <div>
+          <div className="current-album-header-container">
+            <img alt="albumName"
+              className="current-album-image"
+              src={currentAlbum.album.images[0].url}
+            />
+            <div className="current-album-info">
+              <p>Album from your library</p>
+              <h3>{currentAlbum.album.name}</h3>
+            </div>
+          </div>
+          <button
+            //onClick={!songPaused ? pauseSong : resumeSong}
+            className="main-pause-play-btn album-button"
           >
             {/* {songPaused ? "PLAY" : "PAUSE"} */}
           </button>
@@ -168,7 +199,8 @@ MainHeader.propTypes = {
   playlists: PropTypes.array,
   playlistMenu: PropTypes.array,
   token: PropTypes.string,
-  artists: PropTypes.array
+  artists: PropTypes.array,
+  albums: PropTypes.array
 };
 
 const mapStateToProps = state => {
@@ -176,11 +208,13 @@ const mapStateToProps = state => {
     //songPaused: state.songsReducer.songPaused,
     headerTitle: state.uiReducer.title,
     viewType: state.songsReducer.viewType,
+    viewTypeAlbum: state.albumTracksReducer.viewType,
     //playlists: state.playlistReducer.playlists,
     artists: state.artistsReducer.artistList
       ? state.artistsReducer.artistList.items
       : [],
-    token: state.tokenReducer.token
+    token: state.tokenReducer.token,
+    albums: state.albumsReducer.albums ? state.albumsReducer.albums : ""
   };
 };
 

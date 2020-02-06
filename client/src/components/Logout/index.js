@@ -11,7 +11,7 @@ const Logout = () => {
     );
     setTimeout(() => {
       spotifyLogoutWindow.close();
-      window.location.href = "./";
+      window.location.href = "http://localhost:8888/login";
     }, 2000);
   }
 

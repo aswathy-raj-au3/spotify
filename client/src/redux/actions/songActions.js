@@ -191,7 +191,7 @@ export const fetchTopTracksError = () => {
 export const fetchTopTracks = (accessToken) => {
   return dispatch => {
     const request = new Request(
-      `https://api.spotify.com/v1/me/top/tracks`,
+      `https://api.spotify.com/v1/me/top/tracks?time_range=short_term`,
       {
         headers: new Headers({
           Authorization: "Bearer " + accessToken
